@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## v0.1.2
+
+- Allow cold Go builds enough startup time in the Traefik runtime E2E test.
+- Improve readiness failure diagnostics.
+
 ## v0.1.1
 
 - Fix the Traefik binary asset name used by GitHub Actions E2E.

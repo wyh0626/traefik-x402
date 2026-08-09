@@ -9,7 +9,7 @@ experimental:
   plugins:
     x402:
       moduleName: github.com/wyh0626/traefik-x402
-      version: v0.1.1
+      version: v0.1.2
 ```
 
 Restart Traefik after adding or changing a plugin version. Traefik loads plugins

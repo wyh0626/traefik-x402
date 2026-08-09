@@ -48,13 +48,18 @@ ln -s "$repo_dir" "$module_parent/traefik-x402"
 ) >"$mock_log" 2>&1 &
 mock_pid=$!
 
-for _ in {1..50}; do
+mock_ready=false
+for _ in {1..120}; do
 	if curl --silent --fail http://127.0.0.1:19090/healthz >/dev/null; then
+		mock_ready=true
 		break
 	fi
-	sleep 0.1
+	sleep 0.5
 done
-curl --silent --fail http://127.0.0.1:19090/healthz >/dev/null
+if [[ "$mock_ready" != "true" ]]; then
+	echo "Mock facilitator did not become ready within 60 seconds." >&2
+	exit 1
+fi
 
 (
 	cd "$runtime_dir"
@@ -68,7 +73,8 @@ curl --silent --fail http://127.0.0.1:19090/healthz >/dev/null
 ) >"$traefik_log" 2>&1 &
 traefik_pid=$!
 
-for _ in {1..100}; do
+status=000
+for _ in {1..120}; do
 	if ! kill -0 "$traefik_pid" 2>/dev/null; then
 		wait "$traefik_pid"
 	fi
@@ -76,7 +82,7 @@ for _ in {1..100}; do
 	if [[ "$status" == "402" ]]; then
 		break
 	fi
-	sleep 0.1
+	sleep 0.5
 done
 if [[ "$status" != "402" ]]; then
 	echo "Traefik did not expose the protected 402 route; last status was $status." >&2

@@ -65,7 +65,7 @@ experimental:
   plugins:
     x402:
       moduleName: github.com/wyh0626/traefik-x402
-      version: v0.1.1
+      version: v0.1.2
 ```
 
 付费路由的完整动态配置请看 [英文 README](README.md#install-from-the-traefik-plugin-catalog)
