@@ -54,7 +54,7 @@ jobs:
       - name: Download Traefik
         run: |
           curl --fail --silent --show-error --location \
-            "https://github.com/traefik/traefik/releases/download/${TRAEFIK_VERSION}/traefik_${TRAEFIK_VERSION#v}_linux_amd64.tar.gz" \
+            "https://github.com/traefik/traefik/releases/download/${TRAEFIK_VERSION}/traefik_${TRAEFIK_VERSION}_linux_amd64.tar.gz" \
             | tar -xz -C /tmp traefik
 
       - name: Run mock payment through Traefik

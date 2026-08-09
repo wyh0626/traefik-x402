@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## v0.1.1
+
+- Fix the Traefik binary asset name used by GitHub Actions E2E.
+- Update installation examples to the latest release.
+
 ## v0.1.0
 
 - Initial public release.

@@ -13,7 +13,7 @@
 
 - 支持 x402 v2。
 - 只支持固定价格 `exact`。
-- v0.1.0 只支持 EVM（`eip155:*`）网络族。
+- v0.1.x 只支持 EVM（`eip155:*`）网络族。
 - 每次成功请求通常支付一次。
 - 默认只允许 `GET`、`HEAD`；写操作必须显式加入 `allowedMethods`。
 - 同一个插件实例会拒绝相同付款载荷的并发重放。
@@ -65,7 +65,7 @@ experimental:
   plugins:
     x402:
       moduleName: github.com/wyh0626/traefik-x402
-      version: v0.1.0
+      version: v0.1.1
 ```
 
 付费路由的完整动态配置请看 [英文 README](README.md#install-from-the-traefik-plugin-catalog)

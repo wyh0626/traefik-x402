@@ -8,7 +8,7 @@
 | `facilitatorTimeoutSeconds` | no | `15` | Timeout for each verify or settle call. |
 | `maxFacilitatorBodyBytes` | no | `1048576` | Maximum facilitator response body. |
 | `scheme` | no | `exact` | Must be `exact`; other schemes are rejected. |
-| `network` | yes | - | Concrete EVM CAIP-2 network such as `eip155:84532`. v0.1.0 rejects non-EVM namespaces and wildcards. |
+| `network` | yes | - | Concrete EVM CAIP-2 network such as `eip155:84532`. v0.1.x rejects non-EVM namespaces and wildcards. |
 | `asset` | yes | - | Asset identifier required by the scheme. |
 | `amount` | yes | - | Positive integer in the asset's atomic unit. |
 | `payTo` | yes | - | Recipient address. |

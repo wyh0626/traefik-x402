@@ -49,7 +49,7 @@ needed.
 
 ## Non-EVM network is rejected
 
-v0.1.0 supports concrete `eip155:*` networks only. SVM/Solana requires a
+v0.1.x supports concrete `eip155:*` networks only. SVM/Solana requires a
 canonical signed-transaction replay identity and is intentionally deferred.
 
 ## Wallet shows zero test USDC

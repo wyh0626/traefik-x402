@@ -44,7 +44,7 @@ the facilitator call and retained through settlement, so a stale verification
 result cannot enter the upstream later. This remains a local in-memory guard,
 not a distributed replay database. With multiple Traefik replicas, or after the
 first request completes, replay protection still depends on facilitator
-settlement guarantees and upstream idempotency. v0.1.0 rejects non-EVM networks;
+settlement guarantees and upstream idempotency. v0.1.x rejects non-EVM networks;
 SVM support requires a canonical signed-transaction identity and separate tests.
 
 ## Buffering and availability

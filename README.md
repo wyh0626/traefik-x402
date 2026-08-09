@@ -103,7 +103,7 @@ experimental:
   plugins:
     x402:
       moduleName: github.com/wyh0626/traefik-x402
-      version: v0.1.0
+      version: v0.1.1
 ```
 
 Then attach it to a router in dynamic configuration:
@@ -179,7 +179,7 @@ without echo and is never written to disk. Follow the complete
 | --- | --- |
 | x402 protocol | v2 |
 | Payment scheme | `exact` only |
-| Network family | EVM (`eip155:*`) only in v0.1.0 |
+| Network family | EVM (`eip155:*`) only in v0.1.x |
 | Facilitator | HTTP `/verify` and `/settle` |
 | Existing HTTP upstream | Supported |
 | HTTP methods | `GET`, `HEAD` by default; configurable |
