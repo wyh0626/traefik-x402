@@ -1,0 +1,33 @@
+http:
+  routers:
+    paid-api:
+      entryPoints:
+        - web
+      rule: PathPrefix(`/`)
+      service: demo-api
+      middlewares:
+        - x402-payment
+
+  services:
+    demo-api:
+      loadBalancer:
+        servers:
+          - url: http://whoami:80
+
+  middlewares:
+    x402-payment:
+      plugin:
+        x402:
+          facilitatorURL: https://x402.org/facilitator
+          scheme: exact
+          network: "eip155:84532"
+          asset: "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+          amount: "10000"
+          payTo: "0x0000000000000000000000000000000000000001" # replace before a real payment
+          maxTimeoutSeconds: 60
+          description: Access to the paid demo API
+          mimeType: text/plain
+          payerHeader: X-X402-Payer
+          extra:
+            name: "USDC"
+            version: "2"

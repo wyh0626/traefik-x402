@@ -1,0 +1,15 @@
+displayName: x402 v2 Payment Middleware
+type: middleware
+import: github.com/wyh0626/traefik-x402
+summary: Protect existing HTTP services with x402 v2 exact payments.
+testData:
+  facilitatorURL: https://x402.org/facilitator
+  scheme: exact
+  network: "eip155:84532"
+  asset: "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+  amount: "10000"
+  payTo: "0x0000000000000000000000000000000000000001"
+  maxTimeoutSeconds: 60
+  extra:
+    name: USDC
+    version: "2"

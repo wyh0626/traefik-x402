@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.x"
+          cache-dependency-path: |
+            go.mod
+            e2e/real/client/go.sum
+
+      - name: Check formatting
+        run: |
+          files=$(gofmt -l .)
+          if [ -n "$files" ]; then
+            echo "$files"
+            exit 1
+          fi
+
+      - name: Vet plugin
+        run: go vet ./...
+
+      - name: Test plugin with race detector
+        run: go test -race -coverprofile=coverage.out ./...
+
+      - name: Build standalone Base Sepolia client
+        working-directory: e2e/real/client
+        run: go test ./...
+
+  traefik-e2e:
+    runs-on: ubuntu-latest
+    env:
+      TRAEFIK_VERSION: v3.7.10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.x"
+
+      - name: Download Traefik
+        run: |
+          curl --fail --silent --show-error --location \
+            "https://github.com/traefik/traefik/releases/download/${TRAEFIK_VERSION}/traefik_${TRAEFIK_VERSION#v}_linux_amd64.tar.gz" \
+            | tar -xz -C /tmp traefik
+
+      - name: Run mock payment through Traefik
+        env:
+          TRAEFIK_BIN: /tmp/traefik
+        run: ./e2e/run.sh

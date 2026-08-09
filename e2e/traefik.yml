@@ -1,0 +1,15 @@
+entryPoints:
+  web:
+    address: "127.0.0.1:18080"
+
+providers:
+  file:
+    filename: ./e2e/dynamic.yml
+
+experimental:
+  localPlugins:
+    x402:
+      moduleName: github.com/wyh0626/traefik-x402
+
+log:
+  level: INFO

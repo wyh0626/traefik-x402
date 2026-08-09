@@ -1,0 +1,49 @@
+services:
+  mock:
+    build:
+      context: ..
+      dockerfile: e2e/Dockerfile
+    command: /usr/local/bin/mock
+    environment:
+      MOCK_ADDR: :19090
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:19090/healthz"]
+      interval: 1s
+      timeout: 1s
+      retries: 30
+
+  traefik:
+    image: traefik:v3.7.10
+    command:
+      - --entryPoints.web.address=:80
+      - --entryPoints.traefik.address=:8080
+      - --providers.file.filename=/etc/traefik/dynamic.yml
+      - --experimental.localPlugins.x402.moduleName=github.com/wyh0626/traefik-x402
+      - --ping=true
+      - --ping.entryPoint=traefik
+      - --global.checkNewVersion=false
+      - --global.sendAnonymousUsage=false
+      - --log.level=INFO
+    ports:
+      - "${TRAEFIK_PORT:-18080}:80"
+    volumes:
+      - ..:/plugins-local/src/github.com/wyh0626/traefik-x402:ro
+      - ./docker-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    depends_on:
+      mock:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  client:
+    build:
+      context: ..
+      dockerfile: e2e/Dockerfile
+    environment:
+      SERVER_URL: http://traefik/protected
+    depends_on:
+      traefik:
+        condition: service_healthy

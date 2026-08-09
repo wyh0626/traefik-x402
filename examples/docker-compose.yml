@@ -1,0 +1,17 @@
+services:
+  traefik:
+    image: traefik:v3.7.10
+    command:
+      - --configFile=/etc/traefik/traefik.yml
+    ports:
+      - "8080:80"
+      - "8081:8080"
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./dynamic.yml:/etc/traefik/dynamic.yml:ro
+      - ..:/plugins-local/src/github.com/wyh0626/traefik-x402:ro
+    depends_on:
+      - whoami
+
+  whoami:
+    image: traefik/whoami:v1.11

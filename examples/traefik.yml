@@ -1,0 +1,20 @@
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+experimental:
+  localPlugins:
+    x402:
+      moduleName: github.com/wyh0626/traefik-x402
+
+log:
+  level: INFO

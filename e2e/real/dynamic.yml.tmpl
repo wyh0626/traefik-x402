@@ -1,0 +1,33 @@
+http:
+  routers:
+    paid-api:
+      entryPoints:
+        - web
+      rule: Path(`/paid`)
+      service: real-upstream
+      middlewares:
+        - x402-payment
+
+  services:
+    real-upstream:
+      loadBalancer:
+        servers:
+          - url: http://127.0.0.1:19091
+
+  middlewares:
+    x402-payment:
+      plugin:
+        x402:
+          facilitatorURL: https://x402.org/facilitator
+          scheme: exact
+          network: "eip155:84532"
+          asset: "0x036CbD53842c5426634e7929541eC2318f3dCF7e"
+          amount: "1000"
+          payTo: "__PAY_TO__"
+          maxTimeoutSeconds: 60
+          description: Real Base Sepolia x402 test
+          mimeType: application/json
+          payerHeader: X-X402-Payer
+          extra:
+            name: USDC
+            version: "2"
